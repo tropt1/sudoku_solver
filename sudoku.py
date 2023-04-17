@@ -85,8 +85,8 @@ def draw_numbers():
             
 def button_exit():
     text_render = font3.render("exit", True, (255, 255, 255))
-    pygame.draw.rect(screen, pygame.Color("red"), pygame.Rect(385, 495, 90, 45), 0)
-    screen.blit(text_render, (395, 490))
+    pygame.draw.rect(screen, pygame.Color("red"), pygame.Rect(395, 495, 80, 45), 0)
+    screen.blit(text_render, (400, 490))
 
 def button_generate():
     text_render = font3.render("generate", True, (0, 0, 0))
