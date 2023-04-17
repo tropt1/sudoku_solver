@@ -4,7 +4,9 @@ import sudokum
 
 pygame.init()
 
-#ljgfg,jhdcj,`shdg 
+
+#   test
+
 
 # arr = sudokum.generate(mask_rate=0.7)
 # for i in range(9):
