@@ -2,7 +2,7 @@ import pygame
 import sys
 import sudokum
 import solver
-#gvnfdosghbiufdsbivsd
+
 
 pygame.init()
 
