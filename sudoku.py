@@ -53,9 +53,9 @@ def draw_background():
         i += 1
 
 
-def write(text, y, color="Red"):
-    text = font1.render(text, True, pygame.Color(color))
-    text_rect = text.get_rect(center=(WIDTH // 2, y))
+def write(color="Red"):
+    text = font1.render("sudoku", True, pygame.Color(color))
+    text_rect = text.get_rect(center=(WIDTH // 2, 12))
     screen.blit(text, text_rect)
 
 
@@ -83,7 +83,7 @@ solve_button = Button(105, 45)
 
 def main():
     draw_background()
-    write("sudoku", 12)
+    write()
     draw_numbers()
     exit_button.draw(395, 495, 'exit')
     generate_button.draw(25, 495, 'generate')
