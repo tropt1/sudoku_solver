@@ -44,6 +44,7 @@ WIDTH, HEIGHT = 500, 560
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 font1 = pygame.font.SysFont("Arial", 19)
 font2 = pygame.font.SysFont("Arial", 48)
+font3 = pygame.font.SysFont("Arial", 42)
 
 
 def draw_background():
@@ -81,12 +82,31 @@ def draw_numbers():
             output = arr[row][col]
             n_text = font2.render(str(output), True, pygame.Color('black'))
             screen.blit(n_text, pygame.Vector2((col * 50) + offset - 1, (row * 50) + offset - 11))
+            
+def button_exit():
+    text_render = font3.render("exit", True, (255, 255, 255))
+    pygame.draw.rect(screen, pygame.Color("red"), pygame.Rect(385, 495, 90, 45), 0)
+    screen.blit(text_render, (395, 490))
+
+def button_generate():
+    text_render = font3.render("generate", True, (0, 0, 0))
+    pygame.draw.rect(screen, pygame.Color("grey"), pygame.Rect(25, 495, 175, 45), 0)
+    screen.blit(text_render, (30, 490))
+
+def button_reset():
+    text_render = font3.render("solve", True, (0, 0, 0))
+    pygame.draw.rect(screen, pygame.Color("grey"), pygame.Rect(210, 495, 105, 45), 0)
+    screen.blit(text_render, (215, 490))
+
 
 
 def main():
     draw_background()
     write()
     draw_numbers()
+#     button_exit()
+#     button_generate()
+#     button_reset()
     pygame.display.flip()
     solver.Sudoku(arr, 0, 0)
     draw_numbers()
