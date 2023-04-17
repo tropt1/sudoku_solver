@@ -8,11 +8,11 @@ pygame.init()
 
 
 class Button:
-    def __init__(self, width, height):
+    def __init__(self, width, height, active_color, inactive_color):
         self.width = width
         self.height = height
-        self.active_clr = (170, 180, 185)
-        self.inactive_clr = (130, 140, 150)
+        self.active_clr = active_color
+        self.inactive_clr = inactive_color   #TODO доделать увет кнопок
         self.font = pygame.font.SysFont("Arial", 42)
 
     def draw(self, x: int, y: int, message: str, action=None):
@@ -74,23 +74,25 @@ def draw_numbers():
         for col in range(9):
             output = arr[row][col]
             n_text = font2.render(str(output), True, pygame.Color('black'))
-            screen.blit(n_text, pygame.Vector2((col * 50) + offset - 1, (row * 50) + offset - 11))
+            screen.blit(n_text, pygame.Vector2((col * 50) + offset + 4, (row * 50) + offset - 11))
 
-exit_button = Button(90, 45)
-generate_button = Button(175, 45)
-solve_button = Button(105, 45)
+
+    #TODO дописать цвет кнопок
+exit_button = Button(70, 45, ())
+generate_button = Button(145, 45)
+solve_button = Button(90, 45)
 
 
 def main():
     draw_background()
     write()
     draw_numbers()
-    exit_button.draw(395, 495, 'exit')
+    exit_button.draw(405, 495, 'exit')
     generate_button.draw(25, 495, 'generate')
-    solve_button.draw(210, 495, 'solve')
+    solve_button.draw(200, 495, 'solve')
     pygame.display.flip()
 
-
+#TODO
 
     #solver.Sudoku(arr, 0, 0)
     #draw_numbers()
