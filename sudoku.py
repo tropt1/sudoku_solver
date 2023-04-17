@@ -59,9 +59,9 @@ def draw_background():
         i += 1
 
 
-def write(text, y, color="Red"):
-    text = font1.render(text, True, pygame.Color(color))
-    text_rect = text.get_rect(center=(WIDTH // 2, y))
+def write(color="Red"):
+    text = font1.render("sudoku", True, pygame.Color(color))
+    text_rect = text.get_rect(center=(WIDTH // 2, 12))
     screen.blit(text, text_rect)
 
 
@@ -85,7 +85,7 @@ def draw_numbers():
 
 def main():
     draw_background()
-    write("sudoku", 12)
+    write()
     draw_numbers()
     pygame.display.flip()
     solver.Sudoku(arr, 0, 0)
