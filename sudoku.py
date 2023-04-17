@@ -1,11 +1,36 @@
 import pygame
 import sys
 import sudokum
+import solver
+
 
 pygame.init()
 
+# x = 385 y = 495 width = 90 heigth = 40
+class SolveButton:
+    def __init__(self, width, height, action):
+        self.width = width
+        self.height = height
 
-#   test
+    def draw(self, x:int, y:int, message:str, action):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        if (x < mouse[0] < x + self.width) and (y < mouse[1] < y + self.height):
+            pygame.draw.rect(screen, (9, 130, 236), (x, y, self.width, self.height))
+
+            if click[0] == 1:
+                ...
+
+        else:
+            pygame.draw.rect(screen, (9, 130, 236), (x, y, self.width, self.height))
+
+
+
+
+
+
+
 
 
 # arr = sudokum.generate(mask_rate=0.7)
@@ -13,6 +38,7 @@ pygame.init()
 #     for j in range(9):
 #         if arr[i][j] == 0:
 #             arr[i][j] = " "
+
 
 WIDTH, HEIGHT = 500, 560
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -49,21 +75,20 @@ def generator():
 
 
 def draw_numbers():
-    row = 0
     offset = 35
-    while row < 9:
-        col = 0
-        while col < 9:
+    for row in range(9):
+        for col in range(9):
             output = arr[row][col]
             n_text = font2.render(str(output), True, pygame.Color('black'))
             screen.blit(n_text, pygame.Vector2((col * 50) + offset - 1, (row * 50) + offset - 11))
-            col += 1
-        row += 1
 
 
 def main():
     draw_background()
     write("sudoku", 12)
+    draw_numbers()
+    pygame.display.flip()
+    solver.Sudoku(arr, 0, 0)
     draw_numbers()
     pygame.display.flip()
 

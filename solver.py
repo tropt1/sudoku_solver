@@ -1,12 +1,4 @@
-import sudokum
-
-M = int(input('Type sudoku size: '))
-
-def Print(a):
-    for i in range(M):
-        for j in range(M):
-            print(a[i][j], end=" ")
-        print()
+M = 9
 
 
 def solve(grid, row, col, num):
@@ -28,31 +20,20 @@ def solve(grid, row, col, num):
     return True
 
 
-def Suduko(grid, row, col):
-    if (row == M - 1 and col == M):
+def Sudoku(grid, row, col):
+    if row == M - 1 and col == M:
         return True
     if col == M:
         row += 1
         col = 0
-    if grid[row][col] > 0:
-        return Suduko(grid, row, col + 1)
+    if grid[row][col] != ' ':
+        return Sudoku(grid, row, col + 1)
     for num in range(1, M + 1):
 
         if solve(grid, row, col, num):
 
             grid[row][col] = num
-            if Suduko(grid, row, col + 1):
+            if Sudoku(grid, row, col + 1):
                 return True
-        grid[row][col] = 0
+        grid[row][col] = ' '
     return False
-
-
-grid = sudokum.generate()
-
-if (Suduko(grid, 0, 0) and M in (3, 9)):
-   Print(grid)
-else:
-    print("Solution does not exist or you typed wrong number")
-
-
-exit()
