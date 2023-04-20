@@ -91,6 +91,7 @@ def generate_button_action():
 
 def exit_button_action():
     pygame.quit()
+    sys.exit()
 
 
 def solve_button_action():
@@ -100,7 +101,7 @@ def solve_button_action():
 
 # Button(width, height, active_color, inactive_color)
 # Creating buttons for exit, generate sudoku, solve sudoku
-exit_button = Button(70, 45, (200, 25, 25), (140, 30, 30))
+exit_button = Button(65, 45, (200, 25, 25), (140, 30, 30))
 generate_button = Button(145, 45)
 solve_button = Button(90, 45)
 
@@ -108,7 +109,7 @@ solve_button = Button(90, 45)
 def main():
     draw_background()
     write()
-    exit_button.draw(405, 495, 'exit', exit_button_action)
+    exit_button.draw(410, 495, 'exit', exit_button_action)
     generate_button.draw(25, 495, 'generate', generate_button_action)
     solve_button.draw(200, 495, 'solve', solve_button_action)
     pygame.display.flip()
