@@ -12,5 +12,7 @@ modules required:
 
 How to use:
 
-1.  clone <repository https>
-2. run sudoku.py
+1. make a repository where you will clone the project
+2. create venv with required dependences 
+3. ```git clone``` %repository https%
+4. run sudoku.py
