@@ -19,9 +19,7 @@ class Button:
         self.font = pygame.font.SysFont("Arial", 42)
 
     def draw(self, x: int, y: int, message: str, action=None):
-
         mouse = pygame.mouse.get_pos()
-        click = pygame.mouse.get_pressed()
 
         if (x < mouse[0] < x + self.width) and (y < mouse[1] < y + self.height):
             pygame.draw.rect(screen, self.active_clr, (x, y, self.width, self.height))
@@ -35,6 +33,10 @@ class Button:
 
         text_render = self.font.render(message, True, (255, 255, 255))
         screen.blit(text_render, (x + 5, y - 5))
+
+    def change_color(self, active_color, inactive_color):
+        self.active_clr = active_color
+        self.inactive_clr = inactive_color
 
 
 WIDTH, HEIGHT = 500, 560
@@ -99,11 +101,20 @@ def solve_button_action():
     pygame.display.flip()
 
 
+def check_button_action():
+    if not(solver.Check(arr)):
+        check_button.change_color((200, 25, 25), (140, 30, 30))
+
+    else:
+        check_button.change_color((25, 200, 25), (30, 140, 30))
+
+
 # Button(width, height, active_color, inactive_color)
 # Creating buttons for exit, generate sudoku, solve sudoku
 exit_button = Button(65, 45, (200, 25, 25), (140, 30, 30))
 generate_button = Button(145, 45)
 solve_button = Button(90, 45)
+check_button = Button(100, 45)
 
 
 def main():
@@ -111,12 +122,14 @@ def main():
     write()
     exit_button.draw(410, 495, 'exit', exit_button_action)
     generate_button.draw(25, 495, 'generate', generate_button_action)
-    solve_button.draw(200, 495, 'solve', solve_button_action)
+    solve_button.draw(190, 495, 'solve', solve_button_action)
+    check_button.draw(300, 495, 'check', check_button_action)
     pygame.display.flip()
 
 
 while True:
     for event in pygame.event.get():
+
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()

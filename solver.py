@@ -1,7 +1,7 @@
 M = 9
 
 
-def solve(grid, row, col, num):
+def solve(grid: list[list], row: int, col, num: int) -> bool:
     for x in range(9):
         if grid[row][x] == num:
             return False
@@ -20,7 +20,7 @@ def solve(grid, row, col, num):
     return True
 
 
-def Sudoku(grid, row, col):
+def Sudoku(grid: list[list], row: int, col) -> bool:
     if row == M - 1 and col == M:
         return True
     if col == M:
@@ -37,3 +37,19 @@ def Sudoku(grid, row, col):
                 return True
         grid[row][col] = ' '
     return False
+
+
+def Check(arr: list[list]) -> bool:
+    for i in range(9):
+        if ' ' in arr[i]:
+            return False
+        elif sum(arr[i]) != sum(set(arr[i])):
+            return False
+
+    temp_arr = list(map(list, arr))
+
+    for i in range(9):
+        if sum(temp_arr[i]) != sum(set(temp_arr[i])):
+            return False
+
+    return True
