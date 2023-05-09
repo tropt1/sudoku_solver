@@ -3,45 +3,51 @@ import sys
 import sudokum
 import solver
 
-
 pygame.init()
 
-# x = 385 y = 495 width = 90 heigth = 40
-class SolveButton:
-    def __init__(self, width, height, action):
+arr = [[" " for _ in range(9)] for _ in range(9)]
+
+
+class Button:
+    def __init__(self, screen, position, width, height, text,
+                 active_color=(170, 180, 185),
+                 inactive_color=(130, 140, 150)):
+        self.screen = screen
+        self.text = text
+        self.x ,self.y = position
+        self.position = position
         self.width = width
         self.height = height
+        self.active_clr = active_color
+        self.inactive_clr = inactive_color
+        self.font = pygame.font.SysFont("Arial", 42)
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
-    def draw(self, x:int, y:int, message:str, action):
+    def draw(self):
         mouse = pygame.mouse.get_pos()
-        click = pygame.mouse.get_pressed()
 
-        if (x < mouse[0] < x + self.width) and (y < mouse[1] < y + self.height):
-            pygame.draw.rect(screen, (9, 130, 236), (x, y, self.width, self.height))
+        if (self.x < mouse[0] < self.x + self.width) and (self.y < mouse[1] < self.y + self.height):
+            pygame.draw.rect(screen, self.active_clr, (self.x, self.y, self.width, self.height))
 
-            if click[0] == 1:
-                ...
+            # if pygame.event.get(pygame.MOUSEBUTTONUP):
+            #     if action is not None:
+            #         action()
 
         else:
-            pygame.draw.rect(screen, (9, 130, 236), (x, y, self.width, self.height))
+            pygame.draw.rect(screen, self.inactive_clr, (self.x, self.y, self.width, self.height))
 
 
+        text_render = self.font.render(self.text, True, (255, 255, 255))
+        return screen.blit(text_render, (self.x + 5, self.y - 5))
 
-
-
-
-
-
-
-# arr = sudokum.generate(mask_rate=0.7)
-# for i in range(9):
-#     for j in range(9):
-#         if arr[i][j] == 0:
-#             arr[i][j] = " "
+    def change_color(self, active_color, inactive_color):
+        self.active_clr = active_color
+        self.inactive_clr = inactive_color
 
 
 WIDTH, HEIGHT = 500, 560
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("sudoku")
 font1 = pygame.font.SysFont("Arial", 19)
 font2 = pygame.font.SysFont("Arial", 48)
 font3 = pygame.font.SysFont("Arial", 42)
@@ -59,11 +65,12 @@ def draw_background():
                          pygame.Vector2(470, (i * 50) + 25), line_width)
         i += 1
 
-
-def write(color="Red"):
-    text = font1.render("sudoku", True, pygame.Color(color))
-    text_rect = text.get_rect(center=(WIDTH // 2, 12))
-    screen.blit(text, text_rect)
+    # offset = 35
+    # for row in range(9):
+    #     for col in range(9):
+    #         output = arr[row][col]
+    #         n_text = font2.render(str(output), True, pygame.Color('black'))
+    #         screen.blit(n_text, pygame.Vector2((col * 50) + offset + 4, (row * 50) + offset - 11))
 
 
 def generator():
@@ -75,48 +82,61 @@ def generator():
                 arr[i][j] = " "
 
 
-def draw_numbers():
+def generate_button_action():
+    generator()
     offset = 35
     for row in range(9):
         for col in range(9):
             output = arr[row][col]
             n_text = font2.render(str(output), True, pygame.Color('black'))
-            screen.blit(n_text, pygame.Vector2((col * 50) + offset - 1, (row * 50) + offset - 11))
-            
-def button_exit():
-    text_render = font3.render("exit", True, (255, 255, 255))
-    pygame.draw.rect(screen, pygame.Color("red"), pygame.Rect(395, 495, 80, 45), 0)
-    screen.blit(text_render, (400, 490))
+            screen.blit(n_text, pygame.Vector2((col * 50) + offset + 4, (row * 50) + offset - 11))
+    pygame.display.flip()
 
-def button_generate():
-    text_render = font3.render("generate", True, (0, 0, 0))
-    pygame.draw.rect(screen, pygame.Color("grey"), pygame.Rect(25, 495, 175, 45), 0)
-    screen.blit(text_render, (30, 490))
+def exit_button_action():
+    pygame.quit()
+    sys.exit()
 
-def button_reset():
-    text_render = font3.render("solve", True, (0, 0, 0))
-    pygame.draw.rect(screen, pygame.Color("grey"), pygame.Rect(210, 495, 105, 45), 0)
-    screen.blit(text_render, (215, 490))
 
+def solve_button_action():
+    solver.Sudoku(arr, 0, 0)
+    pygame.display.flip()
+
+
+def check_button_action():
+    if not(solver.Check(arr)):
+        check_button.change_color((200, 25, 25), (140, 30, 30))
+    else:
+        check_button.change_color((25, 200, 25), (30, 140, 30))
+
+
+# Button(width, height, active_color, inactive_color)
+# Creating buttons for exit, generate sudoku, solve sudoku
+exit_button = Button(screen, (410, 495), 65, 45, 'exit',(200, 25, 25), (140, 30, 30))
+generate_button = Button(screen, (25, 495), 145, 45, 'generate')
+solve_button = Button(screen, (190, 495), 90, 45, 'solve')
+check_button = Button(screen, (300, 495), 100, 45, 'check')
 
 
 def main():
     draw_background()
-    write()
-    draw_numbers()
-#     button_exit()
-#     button_generate()
-#     button_reset()
-    pygame.display.flip()
-    solver.Sudoku(arr, 0, 0)
-    draw_numbers()
+    exit_button.draw()
+    generate_button.draw()
+    solve_button.draw()
+    check_button.draw()
     pygame.display.flip()
 
 
-generator()
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if exit_button.rect.collidepoint(pygame.mouse.get_pos()):
+                exit_button_action()
+            elif generate_button.rect.collidepoint(pygame.mouse.get_pos()):
+                generate_button_action()
+            elif solve_button.rect.collidepoint(pygame.mouse.get_pos()):
+                solve_button_action()
+        pygame.display.update()
     main()
