@@ -7,6 +7,7 @@ can solve 9x9 sudoku
 1. sudokum
 2. numpy
 3. pygame
+4. pygame-textinput
 
 ## How to use:
 
