@@ -2,17 +2,30 @@
 can solve 9x9 sudoku
 
 
-modules required:
+## Dependencies:
 
 1. sudokum
 2. numpy
 3. pygame
 
+## How to use:
 
+```bash
+# Clone the repository
+git clone https://github.com/tropt1/sudoku_solver
 
-How to use:
+# Create and activate virtual environment
+python -m venv venv
 
-1. make a repository where you will clone the project
-2. create venv with required dependences 
-3. ```git clone``` %repository https%
-4. run sudoku.py
+# For linux/macos
+source ./venv/bin/activate
+
+# For windows
+./venv/Scripts/activate.bat
+
+# Install dependencies
+pip install -f requirements.txt
+
+# Run sudoku solver
+python sudoku.py
+```
