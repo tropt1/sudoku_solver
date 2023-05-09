@@ -65,13 +65,6 @@ def draw_background():
                          pygame.Vector2(470, (i * 50) + 25), line_width)
         i += 1
 
-    # offset = 35
-    # for row in range(9):
-    #     for col in range(9):
-    #         output = arr[row][col]
-    #         n_text = font2.render(str(output), True, pygame.Color('black'))
-    #         screen.blit(n_text, pygame.Vector2((col * 50) + offset + 4, (row * 50) + offset - 11))
-
 
 def generator():
     global arr
