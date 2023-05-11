@@ -165,6 +165,7 @@ for x in range(30, 470, 46):
     for y in range(30, 470, 46):
             input_boxes.append(InputBox(x, y, 45, 45))
 
+
 def main():
     run = True
     while run:
