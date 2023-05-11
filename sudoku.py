@@ -14,7 +14,6 @@ arr = [[" " for _ in range(9)] for _ in range(9)]
 
 
 class InputBox:
-
     def __init__(self, x, y, w, h, text=''):
         self.rect = pygame.Rect(x, y, w, h)
         self.color = COLOR_INACTIVE
@@ -49,7 +48,7 @@ class InputBox:
         width = max(200, self.txt_surface.get_width()+10)
         self.rect.w = width
 
-    def draw(self, screen):
+    def draw(self):
         screen.blit(self.txt_surface, (self.rect.x+10, self.rect.y-5))
         pygame.draw.rect(screen, self.color, self.rect, 2)
 
@@ -160,12 +159,13 @@ exit_button = Button(70, 45, (200, 25, 25), (140, 30, 30))
 generate_button = Button(150, 45)
 solve_button = Button(100, 45)
 check_button = Button(100, 45)
-test = InputBox(30, 30, 45, 45)
+input_boxes = []
 
+for x in range(30, 470, 46):
+    for y in range(30, 470, 46):
+            input_boxes.append(InputBox(x, y, 45, 45))
 
 def main():
-
-
     run = True
     while run:
         draw_background()
@@ -175,11 +175,13 @@ def main():
         generate_button.draw(25, 495, 'generate', generate_button_action)
         solve_button.draw(190, 495, 'solve', solve_button_action)
         check_button.draw(300, 495, 'check', check_button_action(check_button))
-        test.draw(screen)
+        for box in input_boxes:
+            box.draw()
         pygame.display.flip()
 
         for event in pygame.event.get():
-            test.handle_event(event)
+            for box in input_boxes:
+                box.handle_event(event)
             if event.type == pygame.QUIT:
                 run = False
 
