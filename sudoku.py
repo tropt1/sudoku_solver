@@ -161,10 +161,17 @@ solve_button = Button(100, 45)
 check_button = Button(100, 45)
 input_boxes = []
 
-for x in range(30, 470, 46):
-    for y in range(30, 470, 46):
-            input_boxes.append(InputBox(x, y, 45, 45))
+# for x in range(30, 470, 46):
+#     for y in range(30, 470, 46):
+#             input_boxes.append(InputBox(x, y, 45, 45))
 
+q = 1
+while (q * 50) < 450:
+    buffer1 = 1 if q % 3 > 0 else 3
+    for x in range(30, 450, 50):
+        for y in range(30, 450, 50):
+            input_boxes.append(InputBox(x-1.5, y-1.5, 46 - buffer1, 46 - buffer1))
+    q+=1
 
 def main():
     run = True
