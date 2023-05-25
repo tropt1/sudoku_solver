@@ -2,7 +2,7 @@ import pygame
 import sys
 import sudokum
 import solver
-
+import numpy as np
 
 
 pygame.init()
@@ -10,16 +10,18 @@ pygame.init()
 COLOR_INACTIVE = pygame.Color('white')
 COLOR_ACTIVE = pygame.Color('red')
 
-arr = [[" " for _ in range(9)] for _ in range(9)]
+arr = np.array([[" " for _ in range(9)] for _ in range(9)])
 
 
 class InputBox:
-    def __init__(self, x, y, w, h, text=''):
+    def __init__(self, x, y, w, h, row, col, text=''):
         self.rect = pygame.Rect(x, y, w, h)
         self.color = COLOR_INACTIVE
         self.text = text
         self.txt_surface = font2.render(text, True, self.color)
         self.active = False
+        self.row = row
+        self.col = col
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -38,8 +40,11 @@ class InputBox:
                     self.text = ''
                 elif event.key == pygame.K_BACKSPACE:
                     self.text = self.text[:-1]
+                    arr[self.col][self.row] = ' '
                 elif event.unicode in '123456789':
                     self.text = event.unicode
+                    arr[self.col][self.row] = int(event.unicode)
+
                 # Re-render the text.
                 self.txt_surface = font2.render(self.text, True, self.color)
 
@@ -123,11 +128,13 @@ def generator():
     for i in range(9):
         for j in range(9):
             if arr[i][j] == 0:
-                arr[i][j] = " "
+                arr[i][j] = ' '
 
 
 def generate_button_action():
     generator()
+    input_boxes.clear()
+    create_input_boxes()
     for row in range(9):
         for col in range(9):
             output = arr[row][col]
@@ -142,6 +149,7 @@ def exit_button_action():
 
 def solve_button_action():
     solver.Sudoku(arr, 0, 0)
+    input_boxes.clear() # удалить, если надо проверить, что боксы работают
     pygame.display.flip()
 
 
@@ -161,17 +169,20 @@ solve_button = Button(100, 45)
 check_button = Button(100, 45)
 input_boxes = []
 
+
 # for x in range(30, 470, 46):
 #     for y in range(30, 470, 46):
 #             input_boxes.append(InputBox(x, y, 45, 45))
+def create_input_boxes():
+    q = 1
+    while (q * 50) < 450:
+        buffer1 = 1 if q % 3 > 0 else 3
+        for i, x in enumerate(range(30, 450, 50)):
+            for j, y in enumerate(range(30, 450, 50)):
+                if arr[j][i] == ' ':
+                    input_boxes.append(InputBox(x-1.5, y-1.5, 46 - buffer1, 46 - buffer1, i, j))
+        q += 1
 
-q = 1
-while (q * 50) < 450:
-    buffer1 = 1 if q % 3 > 0 else 3
-    for x in range(30, 450, 50):
-        for y in range(30, 450, 50):
-            input_boxes.append(InputBox(x-1.5, y-1.5, 46 - buffer1, 46 - buffer1))
-    q+=1
 
 def main():
     run = True
