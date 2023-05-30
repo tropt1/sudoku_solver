@@ -166,9 +166,6 @@ check_button = Button(100, 45)
 input_boxes = []
 
 
-# for x in range(30, 470, 46):
-#     for y in range(30, 470, 46):
-#             input_boxes.append(InputBox(x, y, 45, 45))
 def create_input_boxes():
     q = 1
     while (q * 50) < 450:
